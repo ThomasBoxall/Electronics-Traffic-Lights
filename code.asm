@@ -1,9 +1,9 @@
 ;*******************************************************************
 ;                               TEMPLATE PROVIDED BY CENTRE
 
-;         TITLE:  #### YOUR PROJECT TITLE#####
-;         AUTHOR: ######## YOUR NAME #########
-;         DATE:   ####### CURRENT DATE ######
+;         TITLE:  #### TRAFFIC LIGHTS CONTROL SYSTEM #####
+;         AUTHOR: ######## THOMAS BOXALL #########
+;         DATE:   ####### 07-03-2022 ######
 ;
 
 ;******************************************************************
@@ -78,6 +78,10 @@ WAIT100	EQU h'3E'
 WAIT1000	EQU h'3F'
 ADCTEMP	EQU h'40'	; adc loop counter
 
+;my vars below
+loopX EQU h'41' ;loop counter variable x
+loopY EQU h'42' ;loop counter variable y
+
 ;****** REGISTER BITS ******
 
 C          	EQU h'00' 	; carry flag
@@ -139,6 +143,30 @@ loop1000ms
 	decfsz 	WAIT1000,F
 	goto 	loop1000ms	
 	return          
+
+; MY SUBROUTINES BELOW
+
+;wait five seconds and check the pedestian crossing while looping
+wait5SecondsButtonCheck
+	;setup times etc for loops
+	movlw d'50' ;set val of 50 into working register
+	movf loopX ;move 50 into loopX
+	movlw d'100' ;set val of 100 into working regsiter
+	movf loopY ;move 100 into loopY
+	
+	movf loopY, 0  ; move loopY into W register
+	sublw d'100' ;subtract W register (loopY) from 100
+	btfss STATUS, Z ;skip next line if the zero bit is set (finished the loop)
+	goto contY ;goto the continue working on loopY
+
+
+contY	movf loopY, 0 ;moove loopY into W register
+	
+
+
+
+
+
 
 ; Predefined ADC subroutines - readadc0, readac1, readadc2
 
@@ -215,10 +243,10 @@ Init
     	clrf    	PORTB     	; make sure PORTB output latches are low   
 	bsf     	STATUS,RP0	; select register page 1
 ;Modify the next line to correspond with your input output reqirements	
-	movlw	b'11111111'	; set port A data direction (0 = output bit, 1 = input bit)
+	movlw	b'00000000'	; set port A data direction (0 = output bit, 1 = input bit)
 	movwf	TRISA		; 
 ;Modify the next line to correspond with your input output requirements	
-	movlw	b'00000000'	; set port B data direction (0 = output bit, 1 = input bit)
+	movlw	b'00000010'	; set port B data direction (0 = output bit, 1 = input bit)
 	movwf	TRISB		; 	
 	bcf     	STATUS,RP0	; select register page 0
 
