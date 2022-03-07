@@ -163,6 +163,12 @@ wait5SecondsButtonCheck
 contY	movf loopY, 0 ;moove loopY into W register
 	
 
+waitFiveSecondsCheckButton
+	;first, stary loop x
+	movlw d'51' ;set val of 51 into w register
+	movf loopX ; move the val in the working register (51) into loopX
+
+topX 
 
 
 
