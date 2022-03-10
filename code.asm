@@ -226,9 +226,65 @@ cycleCrossing
 	return ;return to the main program
 ;end of function
 
+greenTrafficLightSequence
+	bsf PORTA, 4 ;turn on amber led
+	call waitFiveSecondsCheckButton ;wait 5s
+	bcf PORTA, 4 ;turn off amber led
+	bcf PORTA, 3 ;turn off red led
+	bsf PORTA, 5 ; turn on greeen led
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	bcf PORTA, 5 ;turn off green led
+	bsf PORTA, 4 ;turn on amber led
+	call waitFiveSecondsCheckButton
+	bsf PORTA, 3 ;turn on red led
+	bcf PORTA, 4 ;turn off amber led
+	return ;go back to main code
+;end of function
 
+pinkTrafficLightSequence
+	bsf PORTA, 1 ;turn on amber led
+	call waitFiveSecondsCheckButton ;wait 5s
+	bcf PORTA, 1 ;turn off amber led
+	bcf PORTA, 0 ;turn off red led
+	bsf PORTA, 2 ; turn on greeen led
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	bcf PORTA, 2 ;turn off green led
+	bsf PORTA, 1 ;turn on amber led
+	call waitFiveSecondsCheckButton
+	bsf PORTA, 0 ;turn on red led
+	bcf PORTA, 1 ;turn off amber led
+	return ;go back to main code
+;end of function
 
+blueTrafficLightSequence
+	bsf PORTA, 7 ;turn on amber led
+	call waitFiveSecondsCheckButton ;wait 5s
+	bcf PORTA, 7 ;turn off amber led
+	bcf PORTA, 6 ;turn off red led
+	bsf PORTB, 0 ; turn on greeen led
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	call waitFiveSecondsCheckButton
+	bcf PORTB, 0 ;turn off green led
+	bsf PORTA, 7 ;turn on amber led
+	call waitFiveSecondsCheckButton
+	bsf PORTA, 6 ;turn on red led
+	bcf PORTA, 7 ;turn off amber led
+	return ;go back to main code
+;end of function
 
+checkPedestrian
+	;function to check if the wait led is on
+		;if yes - cycle pedestrian crossing
+		;if no - return to main 
+	btfsc PORTB, 2 ;skip next line if wait led NOT on therefore if on, run next line
+	call cycleCrossing
+	return
+;end function
 
 ; Predefined ADC subroutines - readadc0, readac1, readadc2
 
@@ -321,6 +377,20 @@ main
 ;*********************************************************************
 
 ; YOUR PROGRAM GOES HERE ######################
+
+	;first turn on all stop leds
+	bsf PORTA, 0 ;turn on pink set stop eld
+	bsf PORTA, 3 ;turn on green set stop led
+	bsf PORTA, 6 ;turn on blue set stop led
+	bsf PORTB, 3 ;turn on pedestrian stop led
+
+mtop call pinkTrafficLightSequence
+	call checkPedestrian
+	call greenTrafficLightSequence
+	call checkPedestrian
+	call blueTrafficLightSequence
+	call checkPedestrian
+	goto mTop
 
 ;*********************************************************************
 ;			INTERRUPT SERVICE ROUTINE
