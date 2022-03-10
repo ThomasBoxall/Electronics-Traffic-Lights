@@ -147,20 +147,20 @@ loop1000ms
 ; MY SUBROUTINES BELOW
 
 ;wait five seconds and check the pedestian crossing while looping
-wait5SecondsButtonCheck
-	;setup times etc for loops
-	movlw d'50' ;set val of 50 into working register
-	movf loopX ;move 50 into loopX
-	movlw d'100' ;set val of 100 into working regsiter
-	movf loopY ;move 100 into loopY
-	
-	movf loopY, 0  ; move loopY into W register
-	sublw d'100' ;subtract W register (loopY) from 100
-	btfss STATUS, Z ;skip next line if the zero bit is set (finished the loop)
-	goto contY ;goto the continue working on loopY
+;wait5SecondsButtonCheck
+;	;setup times etc for loops
+;	movlw d'50' ;set val of 50 into working register
+;	movf loopX ;move 50 into loopX
+;	movlw d'100' ;set val of 100 into working regsiter
+;	movf loopY ;move 100 into loopY
+;	
+;	movf loopY, 0  ; move loopY into W register
+;	sublw d'100' ;subtract W register (loopY) from 100
+;	btfss STATUS, Z ;skip next line if the zero bit is set (finished the loop)
+;	goto contY ;goto the continue working on loopY
 
 
-contY	movf loopY, 0 ;moove loopY into W register
+;contY	movf loopY, 0 ;moove loopY into W register
 	
 
 waitFiveSecondsCheckButton
@@ -168,7 +168,63 @@ waitFiveSecondsCheckButton
 	movlw d'51' ;set val of 51 into w register
 	movf loopX ; move the val in the working register (51) into loopX
 
-topX 
+topX decfsz loopX, 1 ;decrement loopX and place the new value back into loopX
+	goto startY ;line skipped if result is 0
+	return
+
+startY movlw d'101; ;set value of 101 into w register
+	movf loopY ;move value in working register (101) into loopY
+
+topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
+	goto finalPart ;goto final part of the function
+	goto startX ;run if loopY = 0
+
+finalPart call checkButton
+	call wait10ms ;wait for 10ms function
+	goto startY ;go back up to startY and loop around again
+;end of function
+
+;function to check the button
+checkButton
+	btfss PORTB, 1 ;skip next line of code if button pressed (active high)
+	return ;can go back to where called from
+	bsf PORTB, 2 ;turn red wait LED on
+	return ;go back to main code
+;end of function
+
+
+; function to cycle the pedestrian crossing
+cycleCrossing
+	bcf PORTB, 2 ;turn off red wait LED
+	bcf PORTB, 3 ;turn off red stop LED
+	bsf PORTB, 4 ;turn on green go LED
+	bsf PORTB, 5 ;turn on buzzer
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	call wait1000ms ;wait 1second
+	;now have waited 20seconds so invert things and return to main sequence
+	bcf PORTB, 4 ;turn off green go LED
+	bsf PORTB, 3 ;turn on red stop LED
+	bcf PORTB, 5 ;turn off buzzer
+	return ;return to the main program
+;end of function
 
 
 
