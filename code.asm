@@ -3,7 +3,7 @@
 
 ;         TITLE:  #### TRAFFIC LIGHTS CONTROL SYSTEM #####
 ;         AUTHOR: ######## THOMAS BOXALL #########
-;         DATE:   ####### 07-03-2022 ######
+;         DATE:   ####### 11-03-2022 ######
 ;
 
 ;******************************************************************
@@ -172,7 +172,7 @@ topX decfsz loopX, 1 ;decrement loopX and place the new value back into loopX
 	goto startY ;line skipped if result is 0
 	return
 
-startY movlw d'101; ;set value of 101 into w register
+startY movlw d'101'; ;set value of 101 into w register
 	movf loopY ;move value in working register (101) into loopY
 
 topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
