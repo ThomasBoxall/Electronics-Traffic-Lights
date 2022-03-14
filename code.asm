@@ -165,7 +165,7 @@ loop1000ms
 
 waitFiveSecondsCheckButton
 	;first, stary loop x
-	movlw d'51' ;set val of 51 into w register
+	movlw d'5' ;set val of 5 into w register
 	movf loopX ; move the val in the working register (51) into loopX
 
 topX decfsz loopX, 1 ;decrement loopX and place the new value back into loopX
