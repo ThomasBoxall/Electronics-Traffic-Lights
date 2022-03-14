@@ -166,14 +166,14 @@ loop1000ms
 waitFiveSecondsCheckButton
 	;first, stary loop x
 	movlw d'5' ;set val of 5 into w register
-	movf loopX ; move the val in the working register (51) into loopX
+	;movf loopX ; move the val in the working register (51) into loopX
 
 topX decfsz loopX, 1 ;decrement loopX and place the new value back into loopX
 	goto startY ;line skipped if result is 0
 	return
 
 startY movlw d'101'; ;set value of 101 into w register
-	movf loopY ;move value in working register (101) into loopY
+	;movf loopY ;move value in working register (101) into loopY
 
 topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
 	goto finalPart ;goto final part of the function
@@ -181,7 +181,7 @@ topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
 
 finalPart call checkButton
 	call wait10ms ;wait for 10ms function
-	goto startY ;go back up to startY and loop around again
+	goto topY ;go back up to topY and loop around again
 ;end of function
 
 ;function to check the button
