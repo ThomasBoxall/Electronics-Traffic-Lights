@@ -177,7 +177,7 @@ startY movlw d'101'; ;set value of 101 into w register
 
 topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
 	goto finalPart ;goto final part of the function
-	goto startX ;run if loopY = 0
+	goto topX ;run if loopY = 0
 
 finalPart call checkButton
 	call wait10ms ;wait for 10ms function
@@ -384,7 +384,7 @@ main
 	bsf PORTA, 6 ;turn on blue set stop led
 	bsf PORTB, 3 ;turn on pedestrian stop led
 
-mtop call pinkTrafficLightSequence
+mTop call pinkTrafficLightSequence
 	call checkPedestrian
 	call greenTrafficLightSequence
 	call checkPedestrian
