@@ -166,11 +166,11 @@ loop1000ms
 waitFiveSecondsCheckButton
 	;first, stary loop x
 	movlw d'5' ;set val of 5 into w register
-	;movf loopX ; move the val in the working register (51) into loopX
+	;movf loopX ; move the val in the working register (5) into loopX
 
 topX decfsz loopX, 1 ;decrement loopX and place the new value back into loopX
 	goto startY ;line skipped if result is 0
-	return
+	return ;if result of loopX - 1 is 0, run this line
 
 startY movlw d'101'; ;set value of 101 into w register
 	;movf loopY ;move value in working register (101) into loopY
@@ -184,11 +184,24 @@ finalPart call checkButton
 	goto topY ;go back up to topY and loop around again
 ;end of function
 
+
+waitOneSecondCheckButton
+	movlw d'101' ;set value of 101 into w register
+	movf loopY ;move val from working register into loopY
+topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
+	goto finalPart ;goto final part of the function (if loopyY>0)
+	return ; go back to where called from if loopY=0
+finalPart call checkButton
+	call wait10ms ;wait for 10ms function
+	goto topY ;go back up to the decrement of loopY
+; end of function
+
+
 ;function to check the button
 checkButton
 	btfss PORTB, 1 ;skip next line of code if button pressed (active high)
 	return ;can go back to where called from
-	bsf PORTB, 2 ;turn red wait LED on
+	bsf PORTB, 2 ;turn white wait LED on
 	return ;go back to main code
 ;end of function
 
@@ -245,16 +258,16 @@ greenTrafficLightSequence
 
 pinkTrafficLightSequence
 	bsf PORTA, 1 ;turn on amber led
-	call waitFiveSecondsCheckButton ;wait 5s
+	call waitOneSecondCheckButton ;wait 5s
 	bcf PORTA, 1 ;turn off amber led
 	bcf PORTA, 0 ;turn off red led
 	bsf PORTA, 2 ; turn on greeen led
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTA, 2 ;turn off green led
 	bsf PORTA, 1 ;turn on amber led
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton
 	bsf PORTA, 0 ;turn on red led
 	bcf PORTA, 1 ;turn off amber led
 	return ;go back to main code
