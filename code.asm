@@ -188,12 +188,12 @@ finalPart call checkButton
 waitOneSecondCheckButton
 	movlw d'101' ;set value of 101 into w register
 	movf loopY ;move val from working register into loopY
-topY decfsz loopY, 1 ;decrement loopY and place new value back into loopY
-	goto finalPart ;goto final part of the function (if loopyY>0)
+topZ decfsz loopY, 1 ;decrement loopY and place new value back into loopY
+	goto finalPart2 ;goto final part of the function (if loopyY>0)
 	return ; go back to where called from if loopY=0
-finalPart call checkButton
+finalPart2 call checkButton
 	call wait10ms ;wait for 10ms function
-	goto topY ;go back up to the decrement of loopY
+	goto topZ ;go back up to the decrement of loopY
 ; end of function
 
 
@@ -215,24 +215,7 @@ cycleCrossing
 	call wait1000ms ;wait 1second
 	call wait1000ms ;wait 1second
 	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	call wait1000ms ;wait 1second
-	;now have waited 20seconds so invert things and return to main sequence
+	;now have waited 3seconds so invert things and return to main sequence
 	bcf PORTB, 4 ;turn off green go LED
 	bsf PORTB, 3 ;turn on red stop LED
 	bcf PORTB, 5 ;turn off buzzer
@@ -241,16 +224,31 @@ cycleCrossing
 
 greenTrafficLightSequence
 	bsf PORTA, 4 ;turn on amber led
-	call waitFiveSecondsCheckButton ;wait 5s
+	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTA, 4 ;turn off amber led
 	bcf PORTA, 3 ;turn off red led
 	bsf PORTA, 5 ; turn on greeen led
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton ;wait 10s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton 
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTA, 5 ;turn off green led
 	bsf PORTA, 4 ;turn on amber led
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bsf PORTA, 3 ;turn on red led
 	bcf PORTA, 4 ;turn off amber led
 	return ;go back to main code
@@ -259,14 +257,29 @@ greenTrafficLightSequence
 pinkTrafficLightSequence
 	bsf PORTA, 1 ;turn on amber led
 	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTA, 1 ;turn off amber led
 	bcf PORTA, 0 ;turn off red led
 	bsf PORTA, 2 ; turn on greeen led
+	call waitOneSecondCheckButton ;wait 10s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton 
+	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
 	bcf PORTA, 2 ;turn off green led
 	bsf PORTA, 1 ;turn on amber led
+	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
 	bsf PORTA, 0 ;turn on red led
 	bcf PORTA, 1 ;turn off amber led
@@ -275,16 +288,31 @@ pinkTrafficLightSequence
 
 blueTrafficLightSequence
 	bsf PORTA, 7 ;turn on amber led
-	call waitFiveSecondsCheckButton ;wait 5s
+	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTA, 7 ;turn off amber led
 	bcf PORTA, 6 ;turn off red led
 	bsf PORTB, 0 ; turn on greeen led
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton ;wait 10s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton 
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bcf PORTB, 0 ;turn off green led
 	bsf PORTA, 7 ;turn on amber led
-	call waitFiveSecondsCheckButton
+	call waitOneSecondCheckButton ;wait 5s
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
+	call waitOneSecondCheckButton
 	bsf PORTA, 6 ;turn on red led
 	bcf PORTA, 7 ;turn off amber led
 	return ;go back to main code
