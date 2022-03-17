@@ -242,8 +242,8 @@ greenTrafficLightSequence
 	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
-	bcf PORTA, 5 ;turn off green led
-	bsf PORTB, 7 ;turn on amber led
+	bcf PORTB, 7 ;turn off green led
+	bsf PORTA, 4 ;turn on amber led
 	call waitOneSecondCheckButton ;wait 5s
 	call waitOneSecondCheckButton
 	call waitOneSecondCheckButton
